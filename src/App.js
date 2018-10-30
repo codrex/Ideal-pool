@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import SideNav from './components/SideNav';
-import { SignUpForm } from './components/Forms';
+import IdeaItem from './components/IdeaItem';
 import userPic from './assets/images/User_ProfilePic.png';
 
 import './app.scss';
@@ -19,7 +19,7 @@ class App extends PureComponent<{}> {
       <div className="app">
         <SideNav {...props} />
         <div className="app__body">
-          <SignUpForm />
+          <IdeaItem editMode />
         </div>
       </div>
     );
