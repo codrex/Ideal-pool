@@ -20,6 +20,7 @@
     "react/jsx-filename-extension": "0",
     "import/prefer-default-export": "0",
     "react/prefer-stateless-function": "0",
+    "react/destructuring-assignment": "never",
     "flowtype/boolean-style": ["error", "boolean"],
     "flowtype/define-flow-type": "warn",
     "flowtype/generic-spacing": ["error", "never"],
@@ -40,6 +41,22 @@
     "flowtype/space-before-type-colon": ["error", "never"],
     "flowtype/union-intersection-spacing": ["error", "always"],
     "flowtype/use-flow-type": "warn",
-    "flowtype/valid-syntax": "warn"
+    "flowtype/valid-syntax": "warn",
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "required": {
+          "some": ["nesting", "id"]
+        }
+      }
+    ],
+    "jsx-a11y/label-has-for": [
+      "error",
+      {
+        "required": {
+          "some": ["nesting", "id"]
+        }
+      }
+    ]
   }
 }
