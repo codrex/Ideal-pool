@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SideNav should match snapshot 1`] = `
+<div
+  className="side-nav"
+>
+  <AppIcon />
+  <hr />
+  <UserAvatar
+    avatarUrl=""
+    name="Joyce Lee"
+  />
+</div>
+`;
+
+exports[`SideNav should match snapshot when user is authenticated 1`] = `
+<div
+  className="side-nav"
+>
+  <AppIcon />
+  <hr />
+  <UserAvatar
+    avatarUrl=""
+    name="Joyce Lee"
+  />
+</div>
+`;
+
+exports[`SideNav should match snapshot when user is not authenticated 1`] = `
+<div
+  className="side-nav"
+>
+  <AppIcon />
+  <hr />
+</div>
+`;

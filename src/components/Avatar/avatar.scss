@@ -1,0 +1,24 @@
+.avatar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__img {
+    height: 3rem;
+    width: 3rem;
+    & img {
+      width: 100%;
+      min-width: 100%;
+      object-fit: contain;
+      object-position: center;
+    }
+  }
+  &__text {
+    color: #fff;
+    font-size: 1rem;
+    margin-top: 1rem;
+    text-transform: capitalize;
+    line-height: 18px;
+  }
+}
