@@ -1,0 +1,7 @@
+@import '../../style/_var.scss';
+.mdl-textfield__label::after {
+  background-color: $primary-color;
+}
+.mdl-textfield__input {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+}

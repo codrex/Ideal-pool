@@ -1,5 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react';
+import './text-input.scss';
 
 type Props = {
   label?: string,
