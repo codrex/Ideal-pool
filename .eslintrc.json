@@ -21,6 +21,7 @@
     "import/prefer-default-export": "0",
     "react/prefer-stateless-function": "0",
     "react/destructuring-assignment": "never",
+    "react/button-has-type": ["false"],
     "flowtype/boolean-style": ["error", "boolean"],
     "flowtype/define-flow-type": "warn",
     "flowtype/generic-spacing": ["error", "never"],
