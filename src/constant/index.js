@@ -8,3 +8,10 @@ export const defaultIdea = {
   confidence: 10,
   averageScore: 10.0,
 };
+
+export const routes = {
+  login: '/login',
+  signup: '/signup',
+  ideas: '/ideas',
+  home: '/',
+};
