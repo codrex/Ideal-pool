@@ -3,4 +3,39 @@
   color: #fff;
   background-color: $primary-color !important;
   padding: 0 35px;
+  &--fab {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    height: 46px;
+    min-width: 46px;
+    width: 46px;
+  }
+  &__plus-icon {
+    color: rgba(#fff, 0.6);
+    position: relative;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 26px;
+      height: 1px;
+      background-color: currentColor;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      width: 26px;
+      height: 1px;
+      background-color: currentColor;
+      transform: rotate(90deg);
+    }
+  }
 }

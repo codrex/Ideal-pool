@@ -46,6 +46,7 @@ class TextInput extends PureComponent<Props, State> {
         <input
           className="mdl-textfield__input"
           id={name}
+          name={name}
           type={type}
           value={value}
           onChange={this.handleChange}
