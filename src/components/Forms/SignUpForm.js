@@ -9,7 +9,11 @@ type State = {
   password: string,
   name: string,
 };
-class SignUpForm extends PureComponent<{}, State> {
+
+type Props = {
+  signUpUser: Function,
+};
+class SignUpForm extends PureComponent<Props, State> {
   static Body(props: Object) {
     const {
       handleChange, email, password, name,
@@ -23,7 +27,6 @@ class SignUpForm extends PureComponent<{}, State> {
           handleChange={handleChange}
           value={name}
           className="form__input"
-          required
         />
         <TextInput
           label="Email"
@@ -32,7 +35,6 @@ class SignUpForm extends PureComponent<{}, State> {
           handleChange={handleChange}
           value={email}
           className="form__input"
-          required
         />
         <TextInput
           label="Password"
@@ -41,16 +43,15 @@ class SignUpForm extends PureComponent<{}, State> {
           handleChange={handleChange}
           value={password}
           className="form__input"
-          required
         />
       </form>
     );
   }
 
-  static Footer() {
+  static Footer({ submitForm }: { submitForm: Function }) {
     return (
       <div className="form__footer">
-        <Button type="submit" text="signup" />
+        <Button type="submit" text="signup" handleClick={submitForm} />
         <span className="form__create-account">
           Already have an account?
           <span> Log in</span>
@@ -71,6 +72,11 @@ class SignUpForm extends PureComponent<{}, State> {
     });
   };
 
+  submitForm = () => {
+    console.log(this.state);
+    this.props.signUpUser(this.state);
+  };
+
   render() {
     const { email, password, name } = this.state;
     return (
@@ -82,7 +88,7 @@ class SignUpForm extends PureComponent<{}, State> {
           handleChange={this.handleChange}
           name={name}
         />
-        <SignUpForm.Footer />
+        <SignUpForm.Footer submitForm={this.submitForm} />
       </div>
     );
   }
