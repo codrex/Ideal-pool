@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { signUpUser } from './actions/user';
+import { signUpUser, loginUser } from './actions/user';
 import SideNav from './components/SideNav';
 import Ideas from './components/Ideas';
 import { LoginForm, SignUpForm } from './components/Forms';
@@ -51,12 +51,12 @@ class App extends PureComponent<Props> {
               <Route
                 exact
                 path={routes.login}
-                render={this.redirectWhenAuthenticated(LoginForm, {})}
+                render={this.redirectWhenAuthenticated(LoginForm, { loginUser: actions.loginUser })}
               />
               <Route
                 exact
                 path={routes.home}
-                render={this.redirectWhenAuthenticated(LoginForm, {})}
+                render={this.redirectWhenAuthenticated(LoginForm, { loginUser: actions.loginUser })}
               />
               <Route
                 exact
@@ -87,7 +87,7 @@ function mapStateToProps(state: Object) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ signUpUser }, dispatch),
+    actions: bindActionCreators({ signUpUser, loginUser }, dispatch),
   };
 }
 

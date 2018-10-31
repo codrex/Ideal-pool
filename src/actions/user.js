@@ -6,6 +6,10 @@ export function signUpUser(data: Object) {
   return { type: actionTypes.SIGN_UP_USER, data };
 }
 
+export function loginUser(data: Object) {
+  return { type: actionTypes.LOGIN_USER, data };
+}
+
 export function setUserData(data: Object) {
   return { type: actionTypes.SET_USER_DATA, data };
 }

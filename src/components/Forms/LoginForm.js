@@ -8,7 +8,11 @@ type State = {
   email: string,
   password: string,
 };
-class LoginForm extends PureComponent<{}, State> {
+
+type Props = {
+  loginUser: Function,
+};
+class LoginForm extends PureComponent<Props, State> {
   static Body(props: Object) {
     const { handleChange, email, password } = props;
     return (
@@ -35,12 +39,12 @@ class LoginForm extends PureComponent<{}, State> {
     );
   }
 
-  static Footer() {
+  static Footer({ submitForm }: { submitForm: Function }) {
     const noAccount = "Don't have an account? ";
 
     return (
       <div className="form__footer">
-        <Button type="submit" text="login" />
+        <Button type="submit" text="login" handleClick={submitForm} />
         <span className="form__create-account">
           {noAccount}
           <span>Create an account</span>
@@ -60,13 +64,17 @@ class LoginForm extends PureComponent<{}, State> {
     });
   };
 
+  submitForm = () => {
+    this.props.loginUser(this.state);
+  };
+
   render() {
     const { email, password } = this.state;
     return (
       <div className="form">
         <h3 className="form__header">Log in</h3>
         <LoginForm.Body email={email} password={password} handleChange={this.handleChange} />
-        <LoginForm.Footer />
+        <LoginForm.Footer submitForm={this.submitForm} />
       </div>
     );
   }

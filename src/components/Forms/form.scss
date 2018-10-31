@@ -20,6 +20,7 @@ $width: 40%;
     margin-bottom: $margin-bottom;
     align-items: center;
     width: $width;
+    min-width: 400px;
     & .form__input {
       width: 100%;
     }
@@ -29,6 +30,7 @@ $width: 40%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    min-width: 400px;
   }
   &__create-account {
     font-size: 1rem;

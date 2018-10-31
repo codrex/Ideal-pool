@@ -18,6 +18,7 @@ export const routes = {
 
 export const actionTypes = {
   SIGN_UP_USER: '@@user/signUp',
+  LOGIN_USER: '@@user/login',
   SET_USER_DATA: '@@user/setData',
   USER_AUTH: '@@user/auth',
   FETCH_USER_DATA: '@@user/fetchData',
