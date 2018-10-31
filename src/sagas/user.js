@@ -5,7 +5,7 @@ import {
 import toCamelCase from 'camelcase-keys';
 import { makeReq, refreshToken } from '../api';
 import { actionTypes, requestUrls } from '../constant';
-import { saveTokens } from '../utils';
+import { saveTokens, getTokens, clearTokens } from '../utils';
 import { setUserData, fetchUserData, authenticateUser } from '../actions/user';
 
 export function* getUserDetails(): Generator<*, *, *> {
@@ -68,6 +68,20 @@ export function* loginUser({
   }
 }
 
+export function* logoutUser(): Generator<*, *, *> {
+  try {
+    const tokens = yield getTokens();
+    const { url, method } = requestUrls.logout;
+    yield makeReq(url, method, { data: { refresh_token: tokens.refreshToken } });
+    yield call(clearTokens);
+    yield put(authenticateUser(false));
+    yield put(setUserData({}));
+    window.location.reload();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 //= ===========Watchers===================//
 
 export function* watchSignUpUser(): Generator<*, *, *> {
@@ -78,10 +92,19 @@ export function* watchLoginUser(): Generator<*, *, *> {
   yield takeLatest(actionTypes.LOGIN_USER, loginUser);
 }
 
+export function* watchLogoutUser(): Generator<*, *, *> {
+  yield takeLatest(actionTypes.LOGOUT_USER, logoutUser);
+}
+
 export function* watchFetchUserData(): Generator<*, *, *> {
   yield takeLatest(actionTypes.FETCH_USER_DATA, getUserDetails);
 }
 
 export function* watchUserSagas(): Generator<*, *, *> {
-  yield all([fork(watchSignUpUser), fork(watchFetchUserData), fork(watchLoginUser)]);
+  yield all([
+    fork(watchSignUpUser),
+    fork(watchFetchUserData),
+    fork(watchLoginUser),
+    fork(watchLogoutUser),
+  ]);
 }

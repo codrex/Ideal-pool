@@ -10,6 +10,10 @@ export function loginUser(data: Object) {
   return { type: actionTypes.LOGIN_USER, data };
 }
 
+export function logoutUser() {
+  return { type: actionTypes.LOGOUT_USER };
+}
+
 export function setUserData(data: Object) {
   return { type: actionTypes.SET_USER_DATA, data };
 }

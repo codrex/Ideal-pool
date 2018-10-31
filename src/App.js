@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { signUpUser, loginUser } from './actions/user';
+import { signUpUser, loginUser, logoutUser } from './actions/user';
 import SideNav from './components/SideNav';
 import Ideas from './components/Ideas';
 import { LoginForm, SignUpForm } from './components/Forms';
@@ -41,10 +41,14 @@ class App extends PureComponent<Props> {
   }
 
   render() {
-    const { actions } = this.props;
+    const { actions, userInfo, isAuthenticated } = this.props;
     return (
       <div className="app">
-        <SideNav {...this.props} />
+        <SideNav
+          userInfo={userInfo}
+          isAuthenticated={isAuthenticated}
+          logoutUser={actions.logoutUser}
+        />
         <div className="app__body">
           <Router>
             <Switch>
@@ -87,7 +91,7 @@ function mapStateToProps(state: Object) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ signUpUser, loginUser }, dispatch),
+    actions: bindActionCreators({ signUpUser, loginUser, logoutUser }, dispatch),
   };
 }
 

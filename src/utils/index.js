@@ -12,6 +12,11 @@ export function saveTokens(tokens: Tokens) {
   global.localStorage.setItem(`${tokenKey}refresh`, tokens.refreshToken);
 }
 
+export function clearTokens() {
+  global.localStorage.removeItem(`${tokenKey}jwt`);
+  global.localStorage.removeItem(`${tokenKey}refresh`);
+}
+
 export function getTokens(): Object {
   const jwt = global.localStorage.getItem(`${tokenKey}jwt`);
   const refreshToken = global.localStorage.getItem(`${tokenKey}refresh`);

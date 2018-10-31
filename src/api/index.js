@@ -3,10 +3,11 @@ import axios from 'axios';
 import { requestUrls } from '../constant';
 import { getTokens, saveTokens } from '../utils';
 
+axios.defaults.baseURL = 'https://small-project-api.herokuapp.com';
+
 export async function makeReq(url: string, method: string, options?: Object) {
   try {
     const tokens = getTokens();
-    axios.defaults.baseURL = 'https://small-project-api.herokuapp.com';
     axios.defaults.headers.common['x-access-token'] = tokens ? tokens.jwt : 'empty';
     const response = await axios[method](url, options);
     return response;
@@ -18,7 +19,6 @@ export async function makeReq(url: string, method: string, options?: Object) {
 export async function refreshToken() {
   try {
     const tokens = getTokens();
-    axios.defaults.baseURL = 'https://small-project-api.herokuapp.com';
     const { url, method } = requestUrls.refreshToken;
     const { data } = await axios[method](url, { refresh_token: tokens.refreshToken });
     tokens.jwt = data.jwt;

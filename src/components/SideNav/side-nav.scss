@@ -22,4 +22,11 @@
   &__avatar .avatar__text {
     font-size: 1.2rem;
   }
+  &__logout-btn {
+    box-shadow: none !important;
+    padding: 0;
+    text-transform: capitalize;
+    margin-top: 1rem;
+    color: rgba(0, 0, 0, 0.5);
+  }
 }

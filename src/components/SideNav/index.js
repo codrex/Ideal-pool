@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react';
 import IdeaPoolIcon from '../../assets/images/IdeaPool_icon.png';
 import Avatar from '../Avatar';
+import Button from '../Button';
 import './side-nav.scss';
 
 type UserInfo = {
@@ -12,6 +13,7 @@ type UserInfo = {
 type Props = {
   userInfo: UserInfo,
   isAuthenticated: boolean,
+  logoutUser: Function,
 };
 class SideNav extends PureComponent<Props> {
   static AppIcon() {
@@ -31,13 +33,18 @@ class SideNav extends PureComponent<Props> {
     );
   }
 
+  static LogoutButton({ logoutUser }: { logoutUser: Function }) {
+    return <Button handleClick={logoutUser} className="side-nav__logout-btn" text="log out" />;
+  }
+
   render() {
-    const { userInfo, isAuthenticated } = this.props;
+    const { userInfo, isAuthenticated, logoutUser } = this.props;
     return (
       <div className="side-nav">
         <SideNav.AppIcon />
         <hr />
         {isAuthenticated && <SideNav.UserAvatar {...userInfo} />}
+        {isAuthenticated && <SideNav.LogoutButton logoutUser={logoutUser} />}
       </div>
     );
   }

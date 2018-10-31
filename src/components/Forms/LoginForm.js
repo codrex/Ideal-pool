@@ -1,5 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
+import { Link } from 'react-router-dom';
+import { routes } from '../../constant';
 import TextInput from '../TextInput';
 import Button from '../Button';
 import './form.scss';
@@ -47,7 +49,9 @@ class LoginForm extends PureComponent<Props, State> {
         <Button type="submit" text="login" handleClick={submitForm} />
         <span className="form__create-account">
           {noAccount}
-          <span>Create an account</span>
+          <Link to={routes.signup}>
+            <span>Create an account</span>
+          </Link>
         </span>
       </div>
     );

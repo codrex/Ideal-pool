@@ -34,8 +34,10 @@ $width: 40%;
   }
   &__create-account {
     font-size: 1rem;
-    & span {
+    & span,
+    & a {
       color: $primary-color;
+      text-decoration: none;
     }
   }
 }
