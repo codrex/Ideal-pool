@@ -1,7 +1,7 @@
 // @flow
 import { put } from 'redux-saga/effects';
 import { apiRequestDone, apiRequestFail, apiRequestPending } from '../actions/api';
-import { logoutUser } from '../actions/user';
+import { clearUserData } from '../actions/user';
 import { displayErrorMessage, displaySuccessMessage, displayMessage } from '../utils/toast';
 import { errorMessageType } from '../constant';
 
@@ -12,7 +12,7 @@ export function* requestPending(): Generator<*, *, *> {
 export function* handleErrorSaga(error: Object): Generator<*, *, *> {
   yield put(apiRequestFail());
   if (error.response.status === 401) {
-    yield put(logoutUser());
+    yield put(clearUserData());
     const message = { title: 'Authentication error', message: 'Log in to continue' };
     displayMessage(errorMessageType, message);
   } else displayErrorMessage(error);

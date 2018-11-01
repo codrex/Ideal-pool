@@ -82,7 +82,7 @@ export function* logoutUser(): Generator<*, *, *> {
     yield makeReq(url, method, { data: { refresh_token: tokens.refreshToken } });
     yield clearUserData();
   } catch (error) {
-    yield clearUserData();
+    yield handleErrorSaga(error);
   }
 }
 
@@ -104,11 +104,16 @@ export function* watchFetchUserData(): Generator<*, *, *> {
   yield takeLatest(actionTypes.FETCH_USER_DATA, getUserDetails);
 }
 
+export function* watchClearUserData(): Generator<*, *, *> {
+  yield takeLatest(actionTypes.CLEAR_USER_DATA, clearUserData);
+}
+
 export function* watchUserSagas(): Generator<*, *, *> {
   yield all([
     fork(watchSignUpUser),
     fork(watchFetchUserData),
     fork(watchLoginUser),
     fork(watchLogoutUser),
+    fork(watchClearUserData),
   ]);
 }

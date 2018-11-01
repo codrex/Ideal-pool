@@ -14,6 +14,10 @@ export function logoutUser() {
   return { type: actionTypes.LOGOUT_USER };
 }
 
+export function clearUserData() {
+  return { type: actionTypes.CLEAR_USER_DATA };
+}
+
 export function setUserData(data: Object) {
   return { type: actionTypes.SET_USER_DATA, data };
 }

@@ -21,6 +21,7 @@ export const actionTypes = {
   LOGIN_USER: '@@user/login',
   LOGOUT_USER: '@@user/logout',
   SET_USER_DATA: '@@user/setData',
+  CLEAR_USER_DATA: '@@user/clearData',
   USER_AUTH: '@@user/auth',
   FETCH_USER_DATA: '@@user/fetchData',
   APP_INITIALIZE: '@@app/initialize',
