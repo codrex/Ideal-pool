@@ -9,11 +9,12 @@ import { signUpUser, loginUser, logoutUser } from './actions/user';
 import {
   createIdea, updateIdea, deleteIdea, getIdeas,
 } from './actions/ideas';
-
 import SideNav from './components/SideNav';
 import Ideas from './components/Ideas';
+import LoadingIndicator from './components/LoadingIndicator';
 import { LoginForm, SignUpForm } from './components/Forms';
 import { routes } from './constant';
+import { getIsLoading } from './utils';
 import './app.scss';
 
 type Props = {
@@ -24,6 +25,7 @@ type Props = {
   isAuthenticated: true,
   actions: Object,
   ideas: Object[],
+  isLoading: boolean,
 };
 
 class App extends PureComponent<Props> {
@@ -47,7 +49,7 @@ class App extends PureComponent<Props> {
 
   render() {
     const {
-      actions, userInfo, isAuthenticated, ideas,
+      actions, userInfo, isAuthenticated, ideas, isLoading,
     } = this.props;
     return (
       <div className="app">
@@ -57,6 +59,7 @@ class App extends PureComponent<Props> {
           logoutUser={actions.logoutUser}
         />
         <div className="app__body">
+          <LoadingIndicator isLoading={isLoading} />
           <Router>
             <Switch>
               <Route
@@ -94,6 +97,7 @@ function mapStateToProps(state: Object) {
     userInfo: state.user,
     isAuthenticated: state.isAuthenticated,
     ideas: state.ideas,
+    isLoading: getIsLoading(state.requests),
   };
 }
 

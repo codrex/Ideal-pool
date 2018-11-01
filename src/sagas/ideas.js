@@ -1,41 +1,40 @@
 // @flow
 import {
-  takeLatest, put, all, fork, take, call,
+  takeLatest, put, all, fork, take,
 } from 'redux-saga/effects';
 import toCamelCase from 'camelcase-keys';
 import { makeReq } from '../api';
 import { actionTypes, requestUrls } from '../constant';
 import { setIdea, getIdeas } from '../actions/ideas';
-import { displayErrorMessage, displaySuccessMessage } from '../utils/toast';
+import { handleErrorSaga, handleSuccessSaga, requestPending } from './sagaUtils';
 
 type Idea = {
   data: Object,
 };
 
-export function* displaySuccessMassageSaga(message: string): Generator<*, *, *> {
-  yield take(actionTypes.SET_IDEAS);
-  yield call(displaySuccessMessage, message);
-}
-
 export function* createIdeaSaga({ data }: Idea): Generator<*, *, *> {
   try {
+    yield requestPending();
     const { url, method } = requestUrls.createIdeas;
     yield makeReq(url, method, data);
     yield put(getIdeas());
-    yield displaySuccessMassageSaga('Idea successfully created');
+    yield take(actionTypes.SET_IDEAS);
+    yield handleSuccessSaga('Idea successfully created');
   } catch (error) {
-    displayErrorMessage(error);
+    yield handleErrorSaga(error);
   }
 }
 
 export function* updateIdeaSaga({ data }: Idea): Generator<*, *, *> {
   try {
+    yield requestPending();
     const { url, method } = requestUrls.getUpdateIdeasUrl(data.id);
     yield makeReq(url, method, data);
     yield put(getIdeas());
-    yield displaySuccessMassageSaga('Idea successfully updated');
+    yield take(actionTypes.SET_IDEAS);
+    yield handleSuccessSaga('Idea successfully updated');
   } catch (error) {
-    displayErrorMessage(error);
+    yield handleErrorSaga(error);
   }
 }
 
@@ -45,22 +44,26 @@ function sortIdeas({ createdAt }, secondIdea) {
 
 export function* getIdeasSaga(): Generator<*, *, *> {
   try {
+    yield requestPending();
     const { url, method } = requestUrls.fetchIdeas;
     const response = yield makeReq(url, method);
     const ideas = toCamelCase(response.data).sort(sortIdeas);
     yield put(setIdea(ideas));
+    yield handleSuccessSaga('');
   } catch (error) {
-    displayErrorMessage(error);
+    yield handleErrorSaga(error);
   }
 }
 export function* deleteIdeaSaga({ id }: { id: string }): Generator<*, *, *> {
   try {
+    yield requestPending();
     const { url, method } = requestUrls.getDeleteIdeasUrl(id);
     yield makeReq(url, method);
     yield put(getIdeas());
-    yield displaySuccessMassageSaga('Idea successfully deleted');
+    yield take(actionTypes.SET_IDEAS);
+    yield handleSuccessSaga('Idea successfully deleted');
   } catch (error) {
-    displayErrorMessage(error);
+    yield handleErrorSaga(error);
   }
 }
 

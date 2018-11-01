@@ -2,14 +2,14 @@
 
 import { actionTypes } from '../constant';
 
-export function apiRequestPending(requestName: string) {
-  return { type: actionTypes.API_REQUEST_PENDING, requestName };
+export function apiRequestPending() {
+  return { type: actionTypes.API_REQUEST_PENDING };
 }
 
-export function apiRequestSuccess(requestName: string) {
-  return { type: actionTypes.API_REQUEST_SUCCESS, requestName };
+export function apiRequestDone() {
+  return { type: actionTypes.API_REQUEST_DONE };
 }
 
-export function apiRequestFail(requestName: string) {
-  return { type: actionTypes.API_REQUEST_FAIL, requestName };
+export function apiRequestFail() {
+  return { type: actionTypes.API_REQUEST_FAIL };
 }

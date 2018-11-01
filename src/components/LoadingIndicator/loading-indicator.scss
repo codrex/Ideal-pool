@@ -1,0 +1,42 @@
+@import '../../style/var.scss';
+.mdl-progress {
+  width: 100%;
+}
+
+.mdl-progress.mdl-progress--indeterminate > .bar1,
+.mdl-progress.mdl-progress__indeterminate > .bar1,
+.mdl-progress.mdl-progress--indeterminate > .bar3,
+.mdl-progress.mdl-progress__indeterminate > .bar3 {
+  background-color: $primary-color;
+}
+
+.mdl-progress > .bufferbar {
+  background-image: linear-gradient(
+      to right,
+      rgba($primary-color, 0.3),
+      rgba($primary-color, 0.3)
+    ),
+    linear-gradient(
+      to right,
+      rgba($primary-color, 0.1),
+      rgba($primary-color, 0.1)
+    );
+  z-index: 0;
+  left: 0;
+}
+
+mdl-progress:not(.mdl-progress--indeterminate):not(.mdl-progress--indeterminate)
+  > .auxbar,
+.mdl-progress:not(.mdl-progress__indeterminate):not(.mdl-progress__indeterminate)
+  > .auxbar {
+  background-image: linear-gradient(
+    to right,
+    rgba($primary-color, 0.7),
+    rgba($primary-color, 0.7)
+  );
+}
+
+.loading-indicator--hide {
+  opacity: 0;
+  visibility: hidden;
+}

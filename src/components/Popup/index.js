@@ -39,7 +39,7 @@ class Popup extends PureComponent<Props> {
         <div className="pop-up">
           <div className="pop-up__message-wrapper">
             <h3 className="pop-up__title">Are you sure?</h3>
-            <p className="pop-up__message">This ideal will permanently be deleted.</p>
+            <p className="pop-up__message">This idea will permanently be deleted.</p>
           </div>
 
           <div className="pop-up__button-wrapper">

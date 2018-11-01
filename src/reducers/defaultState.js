@@ -1,5 +1,5 @@
 const state = {
-  requests: {},
+  requests: 0,
   user: {},
   isAuthenticated: false,
   ideas: [],

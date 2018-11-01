@@ -23,15 +23,15 @@ export const actionTypes = {
   SET_USER_DATA: '@@user/setData',
   USER_AUTH: '@@user/auth',
   FETCH_USER_DATA: '@@user/fetchData',
-  API_REQUEST_PENDING: '@@api/pending',
-  API_REQUEST_SUCCESS: '@@api/success',
-  API_REQUEST_FAIL: '@@api/fail',
   APP_INITIALIZE: '@@app/initialize',
   SET_IDEAS: '@@idea/set',
   CREATE_IDEA: '@@idea/create',
   UPDATE_IDEA: '@@idea/update',
   DELETE_IDEA: '@@idea/delete',
   GET_IDEAS: '@@idea/getAll',
+  API_REQUEST_PENDING: '@@api/pending',
+  API_REQUEST_DONE: '@@api/done',
+  API_REQUEST_FAIL: '@@api/fail',
 };
 
 export const requestUrls = {

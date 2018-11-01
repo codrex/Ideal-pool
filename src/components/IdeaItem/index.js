@@ -180,11 +180,9 @@ class IdeaItem extends PureComponent<Props, State> {
   render() {
     const { className = '', header } = this.props;
     const { editMode } = this.state;
-
     if (header) {
       return <IdeaItem.Header />;
     }
-
     return (
       <div className={`idea-item ${className}`}>
         {editMode ? this.renderEditMode() : this.renderViewMode()}

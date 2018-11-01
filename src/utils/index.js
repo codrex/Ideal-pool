@@ -36,3 +36,8 @@ export function hasToken() {
   }
   return false;
 }
+
+export function getIsLoading(requests: number): boolean {
+  if (requests > 0) return true;
+  return false;
+}
