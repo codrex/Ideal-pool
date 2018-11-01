@@ -46,4 +46,10 @@ export const requestUrls = {
   getUpdateIdeasUrl: (id: string) => ({ url: `/ideas/${id}`, method: 'put' }),
 };
 
+export const warningMessageType = 'warning';
+export const successMessageType = 'success';
+export const infoMessageType = 'info';
+export const errorMessageType = 'error';
+export const defaultErrorMessage = 'Operation was unsuccessful';
+
 export const tokenKey = 'I_TOKENS_APP';

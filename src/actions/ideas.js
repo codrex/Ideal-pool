@@ -2,7 +2,7 @@
 
 import { actionTypes } from '../constant';
 
-export function setIdea(data: Object) {
+export function setIdea(data: Object[]) {
   return { type: actionTypes.SET_IDEAS, data };
 }
 

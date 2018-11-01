@@ -1,22 +1,30 @@
 // @flow
 import {
-  takeLatest, put, all, fork,
+  takeLatest, put, all, fork, take, call,
 } from 'redux-saga/effects';
 import toCamelCase from 'camelcase-keys';
 import { makeReq } from '../api';
 import { actionTypes, requestUrls } from '../constant';
 import { setIdea, getIdeas } from '../actions/ideas';
+import { displayErrorMessage, displaySuccessMessage } from '../utils/toast';
 
 type Idea = {
   data: Object,
 };
+
+export function* displaySuccessMassageSaga(message: string): Generator<*, *, *> {
+  yield take(actionTypes.SET_IDEAS);
+  yield call(displaySuccessMessage, message);
+}
+
 export function* createIdeaSaga({ data }: Idea): Generator<*, *, *> {
   try {
     const { url, method } = requestUrls.createIdeas;
     yield makeReq(url, method, data);
     yield put(getIdeas());
+    yield displaySuccessMassageSaga('Idea successfully created');
   } catch (error) {
-    console.log(error);
+    displayErrorMessage(error);
   }
 }
 
@@ -25,8 +33,9 @@ export function* updateIdeaSaga({ data }: Idea): Generator<*, *, *> {
     const { url, method } = requestUrls.getUpdateIdeasUrl(data.id);
     yield makeReq(url, method, data);
     yield put(getIdeas());
+    yield displaySuccessMassageSaga('Idea successfully updated');
   } catch (error) {
-    console.log(error);
+    displayErrorMessage(error);
   }
 }
 
@@ -41,7 +50,7 @@ export function* getIdeasSaga(): Generator<*, *, *> {
     const ideas = toCamelCase(response.data).sort(sortIdeas);
     yield put(setIdea(ideas));
   } catch (error) {
-    console.log(error);
+    displayErrorMessage(error);
   }
 }
 export function* deleteIdeaSaga({ id }: { id: string }): Generator<*, *, *> {
@@ -49,8 +58,9 @@ export function* deleteIdeaSaga({ id }: { id: string }): Generator<*, *, *> {
     const { url, method } = requestUrls.getDeleteIdeasUrl(id);
     yield makeReq(url, method);
     yield put(getIdeas());
+    yield displaySuccessMassageSaga('Idea successfully deleted');
   } catch (error) {
-    console.log(error);
+    displayErrorMessage(error);
   }
 }
 

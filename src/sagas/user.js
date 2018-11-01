@@ -7,7 +7,8 @@ import { makeReq } from '../api';
 import { actionTypes, requestUrls } from '../constant';
 import { saveTokens, getTokens, clearTokens } from '../utils';
 import { setUserData, authenticateUser } from '../actions/user';
-import { getIdeas } from '../actions/ideas';
+import { getIdeas, setIdea } from '../actions/ideas';
+import { displayErrorMessage } from '../utils/toast';
 
 export function* getUserDetails(): Generator<*, *, *> {
   try {
@@ -15,7 +16,7 @@ export function* getUserDetails(): Generator<*, *, *> {
     const response = yield makeReq(url, method);
     yield put(setUserData(toCamelCase(response.data)));
   } catch (error) {
-    console.log(error);
+    displayErrorMessage(error);
   }
 }
 
@@ -40,7 +41,7 @@ export function* signupUser({
     const response = yield makeReq(url, method, data);
     yield afterSuccessLoginOrSignup(response);
   } catch (error) {
-    console.log(error);
+    displayErrorMessage(error);
   }
 }
 
@@ -58,7 +59,7 @@ export function* loginUser({
     const response = yield makeReq(url, method, data);
     yield afterSuccessLoginOrSignup(response);
   } catch (error) {
-    console.log(error);
+    displayErrorMessage(error);
   }
 }
 
@@ -70,8 +71,9 @@ export function* logoutUser(): Generator<*, *, *> {
     yield call(clearTokens);
     yield put(authenticateUser(false));
     yield put(setUserData({}));
+    yield put(setIdea([]));
   } catch (error) {
-    console.log(error);
+    displayErrorMessage(error);
   }
 }
 
