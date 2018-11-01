@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   padding: 0 4rem;
+  overflow: hidden;
   &__header {
     display: flex;
     width: 100%;
@@ -11,6 +12,7 @@
     justify-content: space-between;
     padding: 0 2rem;
     height: 8rem;
+    min-height: 8rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   }
   &__header-text {
@@ -22,8 +24,21 @@
   &__list {
     padding: 0 2rem;
     margin-top: 1.5rem;
+    overflow-y: scroll;
   }
   &__list-item {
     margin-bottom: 2rem;
+  }
+  &__bulb {
+    flex: 1;
+    & .avatar__img {
+      height: 7rem;
+      width: 4rem;
+      border-radius: inherit;
+      margin-top: -7rem;
+    }
+    & .avatar__text {
+      color: rgba(#000, 0.6);
+    }
   }
 }

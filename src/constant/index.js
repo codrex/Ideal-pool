@@ -27,6 +27,11 @@ export const actionTypes = {
   API_REQUEST_SUCCESS: '@@api/success',
   API_REQUEST_FAIL: '@@api/fail',
   APP_INITIALIZE: '@@app/initialize',
+  SET_IDEAS: '@@idea/set',
+  CREATE_IDEA: '@@idea/create',
+  UPDATE_IDEA: '@@idea/update',
+  DELETE_IDEA: '@@idea/delete',
+  GET_IDEAS: '@@idea/getAll',
 };
 
 export const requestUrls = {
@@ -37,8 +42,8 @@ export const requestUrls = {
   userDetails: { url: '/me', method: 'get' },
   createIdeas: { url: '/ideas', method: 'post' },
   fetchIdeas: { url: '/ideas', method: 'get' },
-  getDeleteIdeasUrl: { url: (id: string) => `/ideas/${id}`, method: 'delete' },
-  getUpdateIdeasUrl: { url: (id: string) => `/ideas/${id}`, method: 'put' },
+  getDeleteIdeasUrl: (id: string) => ({ url: `/ideas/${id}`, method: 'delete' }),
+  getUpdateIdeasUrl: (id: string) => ({ url: `/ideas/${id}`, method: 'put' }),
 };
 
 export const tokenKey = 'I_TOKENS_APP';

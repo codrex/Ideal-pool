@@ -6,6 +6,10 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { signUpUser, loginUser, logoutUser } from './actions/user';
+import {
+  createIdea, updateIdea, deleteIdea, getIdeas,
+} from './actions/ideas';
+
 import SideNav from './components/SideNav';
 import Ideas from './components/Ideas';
 import { LoginForm, SignUpForm } from './components/Forms';
@@ -19,6 +23,7 @@ type Props = {
   },
   isAuthenticated: true,
   actions: Object,
+  ideas: Object[],
 };
 
 class App extends PureComponent<Props> {
@@ -41,7 +46,9 @@ class App extends PureComponent<Props> {
   }
 
   render() {
-    const { actions, userInfo, isAuthenticated } = this.props;
+    const {
+      actions, userInfo, isAuthenticated, ideas,
+    } = this.props;
     return (
       <div className="app">
         <SideNav
@@ -72,7 +79,7 @@ class App extends PureComponent<Props> {
               <Route
                 exact
                 path={routes.ideas}
-                render={this.redirectWhenNotAuthenticated(Ideas, {})}
+                render={this.redirectWhenNotAuthenticated(Ideas, { actions, ideas })}
               />
             </Switch>
           </Router>
@@ -86,12 +93,24 @@ function mapStateToProps(state: Object) {
   return {
     userInfo: state.user,
     isAuthenticated: state.isAuthenticated,
+    ideas: state.ideas,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ signUpUser, loginUser, logoutUser }, dispatch),
+    actions: bindActionCreators(
+      {
+        signUpUser,
+        loginUser,
+        logoutUser,
+        createIdea,
+        updateIdea,
+        deleteIdea,
+        getIdeas,
+      },
+      dispatch,
+    ),
   };
 }
 

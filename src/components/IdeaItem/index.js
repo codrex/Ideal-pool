@@ -11,6 +11,7 @@ type Props = {
   idea?: Object,
   className?: string,
   saveIdea?: Function,
+  removeUnSavedIdea?: Function,
   header?: boolean,
 };
 
@@ -26,6 +27,7 @@ class IdeaItem extends PureComponent<Props, State> {
     editMode: false,
     idea: {},
     saveIdea: () => {},
+    removeUnSavedIdea: () => {},
   };
 
   static Select(props: Object) {
@@ -80,6 +82,13 @@ class IdeaItem extends PureComponent<Props, State> {
     hasChanges: false,
   };
 
+  // eslint-disable-next-line
+  UNSAFE_componentWillReceiveProps({ idea }: Props) {
+    if (this.state.idea !== idea) {
+      this.setState({ idea });
+    }
+  }
+
   handleIdeaChange = (name: string, value: string | number) => {
     this.setState(({ idea }) => ({ idea: { ...idea, [name]: value }, hasChanges: true }));
   };
@@ -95,8 +104,10 @@ class IdeaItem extends PureComponent<Props, State> {
   };
 
   handleCancelClick = () => {
+    const { removeUnSavedIdea } = this.props;
     this.toggleEditMode();
     this.setState({ idea: this.props.idea });
+    if (removeUnSavedIdea) removeUnSavedIdea();
   };
 
   handleConfirmClick = () => {
@@ -104,10 +115,16 @@ class IdeaItem extends PureComponent<Props, State> {
     const { saveIdea } = this.props;
     if (idea.content.trim() === '') return;
     this.toggleEditMode();
+    this.setState({ idea: this.props.idea });
     if (hasChanges && saveIdea) {
       saveIdea(idea);
     }
   };
+
+  formatAvg() {
+    const { averageScore } = this.state.idea;
+    return Number(averageScore).toFixed(0);
+  }
 
   renderEditMode() {
     const {
@@ -128,7 +145,7 @@ class IdeaItem extends PureComponent<Props, State> {
           name="confidence"
           value={confidence}
         />
-        <p className="idea-item__score">5</p>
+        <p className="idea-item__score">{this.formatAvg()}</p>
         <IdeaItem.Confirm handleClick={this.handleConfirmClick} />
         <IdeaItem.Cancel handleClick={this.handleCancelClick} />
       </div>
@@ -145,7 +162,7 @@ class IdeaItem extends PureComponent<Props, State> {
         <p className="idea-item__score">{impact}</p>
         <p className="idea-item__score">{ease}</p>
         <p className="idea-item__score">{confidence}</p>
-        <p className="idea-item__score">5</p>
+        <p className="idea-item__score">{this.formatAvg()}</p>
         <IdeaItem.Icon src={bin} alt="delete icon" />
         <IdeaItem.Icon src={pen} alt="edit icon" handleClick={this.toggleEditMode} />
       </div>

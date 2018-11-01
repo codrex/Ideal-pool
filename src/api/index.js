@@ -5,17 +5,6 @@ import { getTokens, saveTokens } from '../utils';
 
 axios.defaults.baseURL = 'https://small-project-api.herokuapp.com';
 
-export async function makeReq(url: string, method: string, options?: Object) {
-  try {
-    const tokens = getTokens();
-    axios.defaults.headers.common['x-access-token'] = tokens ? tokens.jwt : 'empty';
-    const response = await axios[method](url, options);
-    return response;
-  } catch (error) {
-    throw error;
-  }
-}
-
 export async function refreshToken() {
   try {
     const tokens = getTokens();
@@ -26,5 +15,32 @@ export async function refreshToken() {
     return true;
   } catch (error) {
     return false;
+  }
+}
+
+export async function send(url: string, method: string, options?: Object) {
+  try {
+    const tokens = getTokens();
+    axios.defaults.headers.common['x-access-token'] = tokens ? tokens.jwt : 'no-token';
+    const response = await axios[method](url, options);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function makeReq(url: string, method: string, options?: Object) {
+  try {
+    const response = await send(url, method, options);
+    return response;
+  } catch (error) {
+    if (error.response.status === 401) {
+      const isSuccess = await refreshToken();
+      if (isSuccess) {
+        const response = await send(url, method, options);
+        return response;
+      }
+    }
+    throw error;
   }
 }

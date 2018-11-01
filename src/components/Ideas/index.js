@@ -2,15 +2,21 @@
 import React, { PureComponent } from 'react';
 import Button from '../Button';
 import IdeaItem from '../IdeaItem';
-import { ideas } from '../../constant/mock';
+import Avatar from '../Avatar';
 import { defaultIdea } from '../../constant';
+import bulb from '../../assets/images/bulb.png';
 import './ideas.scss';
 
 type State = {
   hasUnsavedIdea: boolean,
   unsavedIdea: Object,
 };
-class Ideas extends PureComponent<{}, State> {
+
+type Props = {
+  actions: Object,
+  ideas: Object[],
+};
+class Ideas extends PureComponent<Props, State> {
   static Header(props: Object) {
     const { handleAddButtonClick } = props;
     return (
@@ -22,6 +28,7 @@ class Ideas extends PureComponent<{}, State> {
   }
 
   static List(props: Object) {
+    const { saveIdea, removeUnSavedIdea } = props;
     return (
       <div className="ideas__list">
         <IdeaItem className="ideas__list-item" header />
@@ -30,11 +37,20 @@ class Ideas extends PureComponent<{}, State> {
             className="ideas__list-item"
             idea={idea}
             key={idea.id}
-            editMode
-            saveIdea={props.saveIdea}
+            editMode={idea.editMode || false}
+            saveIdea={saveIdea}
+            removeUnSavedIdea={removeUnSavedIdea}
           />
         ))}
       </div>
+    );
+  }
+
+  static IdeaBulb() {
+    return (
+      <Avatar text="got ideas?" className="ideas__bulb">
+        <img src={bulb} alt="idea bulb" />
+      </Avatar>
     );
   }
 
@@ -55,22 +71,36 @@ class Ideas extends PureComponent<{}, State> {
     });
   };
 
-  saveIdea = (idea: Object) => {
-    console.log(idea);
+  removeUnSavedIdea = () => {
     this.setState({ hasUnsavedIdea: false, unsavedIdea: {} });
+  };
+
+  saveIdea = (idea: Object) => {
+    const { createIdea, updateIdea } = this.props.actions;
+    this.removeUnSavedIdea();
+    if (idea.id) {
+      updateIdea(idea);
+    } else createIdea(idea);
   };
 
   render() {
     const { unsavedIdea, hasUnsavedIdea } = this.state;
-    let ideasToRender = ideas;
+    let ideasToRender = this.props.ideas;
     if (hasUnsavedIdea) {
       ideasToRender = [unsavedIdea].concat(ideasToRender);
     }
-    console.log(ideasToRender);
+    const showIdeas = ideasToRender.length > 0;
     return (
       <div className="ideas">
         <Ideas.Header handleAddButtonClick={this.addIdeaButtonClicked} />
-        <Ideas.List ideas={ideasToRender} saveIdea={this.saveIdea} />
+        {showIdeas && (
+          <Ideas.List
+            ideas={ideasToRender}
+            saveIdea={this.saveIdea}
+            removeUnSavedIdea={this.removeUnSavedIdea}
+          />
+        )}
+        {!showIdeas && <Ideas.IdeaBulb />}
       </div>
     );
   }

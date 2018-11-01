@@ -3,10 +3,11 @@ import {
   takeLatest, put, all, fork, call,
 } from 'redux-saga/effects';
 import toCamelCase from 'camelcase-keys';
-import { makeReq, refreshToken } from '../api';
+import { makeReq } from '../api';
 import { actionTypes, requestUrls } from '../constant';
 import { saveTokens, getTokens, clearTokens } from '../utils';
-import { setUserData, fetchUserData, authenticateUser } from '../actions/user';
+import { setUserData, authenticateUser } from '../actions/user';
+import { getIdeas } from '../actions/ideas';
 
 export function* getUserDetails(): Generator<*, *, *> {
   try {
@@ -14,14 +15,6 @@ export function* getUserDetails(): Generator<*, *, *> {
     const response = yield makeReq(url, method);
     yield put(setUserData(toCamelCase(response.data)));
   } catch (error) {
-    if (error.response.status === 401) {
-      const isSuccess = yield refreshToken();
-      if (isSuccess) {
-        yield put(fetchUserData());
-      } else {
-        console.log('token refreshed failed');
-      }
-    }
     console.log(error);
   }
 }
@@ -29,6 +22,7 @@ export function* getUserDetails(): Generator<*, *, *> {
 function* afterSuccessLoginOrSignup(response): Generator<*, *, *> {
   yield saveTokens(toCamelCase(response.data));
   yield call(getUserDetails);
+  yield put(getIdeas());
   yield put(authenticateUser(true));
 }
 
