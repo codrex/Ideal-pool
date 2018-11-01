@@ -70,7 +70,6 @@ export function* logoutUser(): Generator<*, *, *> {
     yield call(clearTokens);
     yield put(authenticateUser(false));
     yield put(setUserData({}));
-    window.location.reload();
   } catch (error) {
     console.log(error);
   }

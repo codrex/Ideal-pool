@@ -20,7 +20,7 @@ class LoginForm extends PureComponent<Props, State> {
     return (
       <form className="form__body">
         <TextInput
-          label="Email"
+          placeholder="Email"
           name="email"
           type="email"
           handleChange={handleChange}
@@ -29,7 +29,7 @@ class LoginForm extends PureComponent<Props, State> {
           required
         />
         <TextInput
-          label="Password"
+          placeholder="Password"
           name="password"
           type="password"
           handleChange={handleChange}

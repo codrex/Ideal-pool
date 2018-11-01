@@ -1,0 +1,43 @@
+@import '../../style/var.scss';
+.pop-up {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 1px 1px 7px 2px #0000001f;
+  padding: 2rem;
+  &__title {
+    margin: 0 0 1.5rem;
+    font-weight: 400;
+    font-size: 2rem;
+    text-align: center;
+  }
+  &__message-wrapper {
+    flex: 1;
+  }
+  &__message {
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 1.2rem;
+  }
+  &__button-wrapper {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 2rem;
+  }
+
+  & &__button-wrapper &__ok-btn,
+  & &__button-wrapper &__cancel-btn {
+    background-color: transparent !important;
+    box-shadow: none;
+    font-weight: 700;
+  }
+  &__ok-btn {
+    color: $primary-color;
+  }
+  &__cancel-btn {
+    color: rgba(0, 0, 0, 0.8);
+  }
+}

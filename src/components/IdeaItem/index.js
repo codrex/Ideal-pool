@@ -12,6 +12,7 @@ type Props = {
   className?: string,
   saveIdea?: Function,
   removeUnSavedIdea?: Function,
+  handleDeleteIconClick?: Function,
   header?: boolean,
 };
 
@@ -28,6 +29,7 @@ class IdeaItem extends PureComponent<Props, State> {
     idea: {},
     saveIdea: () => {},
     removeUnSavedIdea: () => {},
+    handleDeleteIconClick: () => {},
   };
 
   static Select(props: Object) {
@@ -126,6 +128,12 @@ class IdeaItem extends PureComponent<Props, State> {
     return Number(averageScore).toFixed(0);
   }
 
+  handleDeleteIconClick = () => {
+    const { id } = this.state.idea;
+    const { handleDeleteIconClick } = this.props;
+    if (handleDeleteIconClick) handleDeleteIconClick(id);
+  };
+
   renderEditMode() {
     const {
       impact, ease, confidence, content,
@@ -163,7 +171,7 @@ class IdeaItem extends PureComponent<Props, State> {
         <p className="idea-item__score">{ease}</p>
         <p className="idea-item__score">{confidence}</p>
         <p className="idea-item__score">{this.formatAvg()}</p>
-        <IdeaItem.Icon src={bin} alt="delete icon" />
+        <IdeaItem.Icon src={bin} alt="delete icon" handleClick={this.handleDeleteIconClick} />
         <IdeaItem.Icon src={pen} alt="edit icon" handleClick={this.toggleEditMode} />
       </div>
     );

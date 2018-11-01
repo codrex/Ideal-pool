@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import Button from '../Button';
 import IdeaItem from '../IdeaItem';
 import Avatar from '../Avatar';
+import Popup from '../Popup';
 import { defaultIdea } from '../../constant';
 import bulb from '../../assets/images/bulb.png';
 import './ideas.scss';
@@ -10,6 +11,8 @@ import './ideas.scss';
 type State = {
   hasUnsavedIdea: boolean,
   unsavedIdea: Object,
+  showPopup: boolean,
+  ideaToBeDeleted: string,
 };
 
 type Props = {
@@ -28,7 +31,7 @@ class Ideas extends PureComponent<Props, State> {
   }
 
   static List(props: Object) {
-    const { saveIdea, removeUnSavedIdea } = props;
+    const { saveIdea, removeUnSavedIdea, handleDeleteIconClick } = props;
     return (
       <div className="ideas__list">
         <IdeaItem className="ideas__list-item" header />
@@ -40,6 +43,7 @@ class Ideas extends PureComponent<Props, State> {
             editMode={idea.editMode || false}
             saveIdea={saveIdea}
             removeUnSavedIdea={removeUnSavedIdea}
+            handleDeleteIconClick={handleDeleteIconClick}
           />
         ))}
       </div>
@@ -57,6 +61,8 @@ class Ideas extends PureComponent<Props, State> {
   state = {
     hasUnsavedIdea: false,
     unsavedIdea: {},
+    showPopup: false,
+    ideaToBeDeleted: '',
   };
 
   addIdeaButtonClicked = () => {
@@ -71,6 +77,10 @@ class Ideas extends PureComponent<Props, State> {
     });
   };
 
+  handleDeleteIconClick = (id: string) => {
+    this.setState({ showPopup: true, ideaToBeDeleted: id });
+  };
+
   removeUnSavedIdea = () => {
     this.setState({ hasUnsavedIdea: false, unsavedIdea: {} });
   };
@@ -83,8 +93,19 @@ class Ideas extends PureComponent<Props, State> {
     } else createIdea(idea);
   };
 
+  deleteIdea = () => {
+    const { deleteIdea } = this.props.actions;
+    const { ideaToBeDeleted } = this.state;
+    deleteIdea(ideaToBeDeleted);
+    this.closePopup();
+  };
+
+  closePopup = () => {
+    this.setState({ showPopup: false });
+  };
+
   render() {
-    const { unsavedIdea, hasUnsavedIdea } = this.state;
+    const { unsavedIdea, hasUnsavedIdea, showPopup } = this.state;
     let ideasToRender = this.props.ideas;
     if (hasUnsavedIdea) {
       ideasToRender = [unsavedIdea].concat(ideasToRender);
@@ -92,12 +113,18 @@ class Ideas extends PureComponent<Props, State> {
     const showIdeas = ideasToRender.length > 0;
     return (
       <div className="ideas">
+        <Popup
+          showPopup={showPopup}
+          handleCancelButtonClick={this.closePopup}
+          handleOkButtonClick={this.deleteIdea}
+        />
         <Ideas.Header handleAddButtonClick={this.addIdeaButtonClicked} />
         {showIdeas && (
           <Ideas.List
             ideas={ideasToRender}
             saveIdea={this.saveIdea}
             removeUnSavedIdea={this.removeUnSavedIdea}
+            handleDeleteIconClick={this.handleDeleteIconClick}
           />
         )}
         {!showIdeas && <Ideas.IdeaBulb />}

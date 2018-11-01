@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import './text-input.scss';
 
 type Props = {
-  label?: string,
+  placeholder?: string,
   value?: string,
   type?: string,
   handleChange?: Function,
@@ -17,7 +17,7 @@ type State = {
 };
 class TextInput extends PureComponent<Props, State> {
   static defaultProps = {
-    label: '',
+    placeholder: '',
     value: '',
     type: 'text',
     handleChange: () => {},
@@ -38,11 +38,11 @@ class TextInput extends PureComponent<Props, State> {
 
   render() {
     const {
-      label, type, name, inputProps, className = '',
+      placeholder, type, name, inputProps, className = '',
     } = this.props;
     const { value } = this.state;
     return (
-      <div className={`mdl-textfield mdl-js-textfield ${className}`}>
+      <div className={`mdl-textfield mdl-js-textfield mdl-textfield--floating-label ${className}`}>
         <input
           className="mdl-textfield__input"
           id={name}
@@ -50,13 +50,9 @@ class TextInput extends PureComponent<Props, State> {
           type={type}
           value={value}
           onChange={this.handleChange}
+          placeholder={placeholder}
           {...inputProps}
         />
-        {label && (
-          <label className="mdl-textfield__label" htmlFor={name}>
-            {label}
-          </label>
-        )}
       </div>
     );
   }
