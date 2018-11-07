@@ -1,9 +1,124 @@
+// @flow
 import React, { PureComponent } from 'react';
+import {
+  BrowserRouter as Router, Route, Switch, Redirect,
+} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { signUpUser, loginUser, logoutUser } from './actions/user';
+import {
+  createIdea, updateIdea, deleteIdea, getIdeas,
+} from './actions/ideas';
+import SideNav from './components/SideNav';
+import Ideas from './components/Ideas';
+import LoadingIndicator from './components/LoadingIndicator';
+import { LoginForm, SignUpForm } from './components/Forms';
+import { routes } from './constant';
+import { getIsLoading } from './utils';
+import './app.scss';
 
-class App extends PureComponent {
+type Props = {
+  userInfo: {
+    name: string,
+    avatarUrl: string,
+  },
+  isAuthenticated: true,
+  actions: Object,
+  ideas: Object[],
+  isLoading: boolean,
+};
+
+class App extends PureComponent<Props> {
+  redirectWhenAuthenticated(Component: Function, componentProps: Object): Function {
+    return () => {
+      if (this.props.isAuthenticated) {
+        return <Redirect to={routes.ideas} />;
+      }
+      return <Component {...componentProps} />;
+    };
+  }
+
+  redirectWhenNotAuthenticated(Component: Function, componentProps: Object): Function {
+    return () => {
+      if (!this.props.isAuthenticated) {
+        return <Redirect to={routes.login} />;
+      }
+      return <Component {...componentProps} />;
+    };
+  }
+
   render() {
-    return <div className="App" />;
+    const {
+      actions, userInfo, isAuthenticated, ideas, isLoading,
+    } = this.props;
+    return (
+      <div className="app">
+        <SideNav
+          userInfo={userInfo}
+          isAuthenticated={isAuthenticated}
+          logoutUser={actions.logoutUser}
+        />
+        <div className="app__body">
+          <LoadingIndicator isLoading={isLoading} />
+          <Router>
+            <Switch>
+              <Route
+                exact
+                path={routes.login}
+                render={this.redirectWhenAuthenticated(LoginForm, { loginUser: actions.loginUser })}
+              />
+              <Route
+                exact
+                path={routes.home}
+                render={this.redirectWhenAuthenticated(LoginForm, { loginUser: actions.loginUser })}
+              />
+              <Route
+                exact
+                path={routes.signup}
+                render={this.redirectWhenAuthenticated(SignUpForm, {
+                  signUpUser: actions.signUpUser,
+                })}
+              />
+              <Route
+                exact
+                path={routes.ideas}
+                render={this.redirectWhenNotAuthenticated(Ideas, { actions, ideas })}
+              />
+            </Switch>
+          </Router>
+        </div>
+      </div>
+    );
   }
 }
 
-export default App;
+function mapStateToProps(state: Object) {
+  return {
+    userInfo: state.user,
+    isAuthenticated: state.isAuthenticated,
+    ideas: state.ideas,
+    isLoading: getIsLoading(state.requests),
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(
+      {
+        signUpUser,
+        loginUser,
+        logoutUser,
+        createIdea,
+        updateIdea,
+        deleteIdea,
+        getIdeas,
+      },
+      dispatch,
+    ),
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App);

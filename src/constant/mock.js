@@ -1,0 +1,38 @@
+export const ideas = [
+  {
+    id: 'ir9tctewu1',
+    content: 'the-content',
+    impact: 8,
+    ease: 10,
+    confidence: 8,
+    average_score: 8.0,
+    created_at: 1524210786,
+  },
+  {
+    id: 'ir9tctewu2',
+    content: 'the-content',
+    impact: 8,
+    ease: 8,
+    confidence: 8,
+    average_score: 8.0,
+    created_at: 1524210786,
+  },
+  {
+    id: 'ir9tctewu3',
+    content: 'the-content',
+    impact: 8,
+    ease: 8,
+    confidence: 8,
+    average_score: 8.0,
+    created_at: 1524210786,
+  },
+  {
+    id: 'ir9tctewu4',
+    content: 'the-content',
+    impact: 8,
+    ease: 8,
+    confidence: 8,
+    average_score: 8.0,
+    created_at: 1524210786,
+  },
+];

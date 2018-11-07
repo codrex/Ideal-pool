@@ -12,10 +12,52 @@
     "jest": true
   },
 
+  "plugins": ["flowtype"],
+  "extends": ["airbnb", "plugin:flowtype/recommended"],
+
   "parser": "babel-eslint",
-  "extends": "airbnb",
   "rules": {
     "react/jsx-filename-extension": "0",
-    "import/prefer-default-export": "0"
+    "import/prefer-default-export": "0",
+    "react/prefer-stateless-function": "0",
+    "react/destructuring-assignment": "never",
+    "react/button-has-type": ["false"],
+    "flowtype/boolean-style": ["error", "boolean"],
+    "flowtype/define-flow-type": "warn",
+    "flowtype/generic-spacing": ["error", "never"],
+    "flowtype/no-primitive-constructor-types": "error",
+    "flowtype/no-weak-types": [
+      "error",
+      {
+        "any": false,
+        "Object": false,
+        "Function": false
+      }
+    ],
+    "flowtype/object-type-delimiter": ["error", "comma"],
+    "flowtype/require-valid-file-annotation": "error",
+    "flowtype/semi": ["error", "always"],
+    "flowtype/space-after-type-colon": ["error", "always"],
+    "flowtype/space-before-generic-bracket": ["error", "never"],
+    "flowtype/space-before-type-colon": ["error", "never"],
+    "flowtype/union-intersection-spacing": ["error", "always"],
+    "flowtype/use-flow-type": "warn",
+    "flowtype/valid-syntax": "warn",
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "required": {
+          "some": ["nesting", "id"]
+        }
+      }
+    ],
+    "jsx-a11y/label-has-for": [
+      "error",
+      {
+        "required": {
+          "some": ["nesting", "id"]
+        }
+      }
+    ]
   }
 }

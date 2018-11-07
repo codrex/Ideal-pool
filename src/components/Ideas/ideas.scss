@@ -1,0 +1,44 @@
+.ideas {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 4rem;
+  overflow: hidden;
+  &__header {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 8rem;
+    min-height: 8rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  &__header-text {
+    font-size: 2rem;
+    text-transform: capitalize;
+    font-weight: 300;
+    margin: 0;
+  }
+  &__list {
+    padding: 0 2rem;
+    margin-top: 1.5rem;
+    overflow-y: scroll;
+  }
+  &__list-item {
+    margin-bottom: 2rem;
+  }
+  &__bulb {
+    flex: 1;
+    & .avatar__img {
+      height: 7rem;
+      width: 4rem;
+      border-radius: inherit;
+      margin-top: -7rem;
+    }
+    & .avatar__text {
+      color: rgba(#000, 0.6);
+    }
+  }
+}
